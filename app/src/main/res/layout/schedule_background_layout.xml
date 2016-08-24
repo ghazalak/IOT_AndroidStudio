@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:background="#ff000000" >
+    <Button android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@android:drawable/ic_input_add"
+            android:id="@+id/addSchedule"
+            android:layout_alignParentRight="true"/>
+    <Button android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@drawable/download"
+            android:id="@+id/schedule_backtoButtons_button"
+            android:layout_alignParentLeft="true"
+            android:onClick="schedule_backtoButtons_buttonHandler"/>
+    <ExpandableListView
+            android:id="@+id/schedule_explv"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_below="@id/addSchedule"
+            />
+
+</RelativeLayout>

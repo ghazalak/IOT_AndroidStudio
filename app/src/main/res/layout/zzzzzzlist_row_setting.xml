@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/tableLayout">
+    <TableRow android:layout_width="match_parent"
+              android:layout_height="match_parent">
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#ff373534">
+            <Button
+                    android:textSize="20dp"
+                    android:id="@+id/name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_horizontal"
+                    />
+        </RelativeLayout>
+    </TableRow>
+</TableLayout>

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import rest.R;
+
 
 public class MainActivity extends Activity {
 
@@ -31,9 +33,9 @@ public class MainActivity extends Activity {
             public void onColorChanged(GradientView view, int color) {
                 mTextView.setTextColor(color);
                 mTextView.setText("#" + Integer.toHexString(color));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mIcon.setTint(color);
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    mIcon.setTint(color);
+//                }
             }
         });
 

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+              <!--android:orientation="vertical"-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="match_parent">-->
+    <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/layout"-->
+            <!--android:layout_centerInParent="true">-->
+    <!--<Button android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/buttons_Child1Row_button"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:textSize="11dip"-->
+            <!--android:textColor="#FF000000"/>-->
+        <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/buttons_Child1Row_text"-->
+                <!--android:layout_below="@id/buttons_Child1Row_button"/>-->
+    <!--<Button android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/buttons_Child2Row_button"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_toRightOf="@id/buttons_Child1Row_button"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:textSize="11dip"-->
+            <!--android:textColor="#FF000000"/>-->
+        <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/buttons_Child2Row_text"-->
+                <!--android:layout_below="@id/buttons_Child2Row_button"/>-->
+    <!--</RelativeLayout>-->
+    <!--<Button android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/buttons_Child3Row_button"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_toRightOf="@id/layout"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:textSize="11dip"-->
+            <!--android:textColor="#FF000000"/>-->
+    <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/buttons_Child3Row_text"-->
+            <!--android:layout_below="@id/buttons_Child3Row_button"/>-->
+    <!--<Button android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/buttons_Child4Row_button"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:textSize="11dip"-->
+            <!--android:layout_toLeftOf="@id/layout"-->
+            <!--android:textColor="#FF000000"/>-->
+    <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/buttons_Child4Row_text"-->
+            <!--android:layout_below="@id/buttons_Child4Row_button"/>-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+    <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/deviceName"/>
+<TableLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true">
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <Button android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttons_Child1Row_button"
+                android:textSize="11dip"
+                android:textColor="#FF000000"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <Button android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttons_Child2Row_button"
+                android:textSize="11dip"
+                android:textColor="#FF000000"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <Button android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttons_Child3Row_button"
+                android:textSize="11dip"
+                android:textColor="#FF000000"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <Button android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttons_Child4Row_button"
+                android:textSize="11dip"
+                android:textColor="#FF000000"
+                android:width="0dp"
+                android:layout_weight="0"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttons_Child1Row_text"
+                android:gravity="center"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttons_Child2Row_text"
+                android:gravity="center"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttons_Child3Row_text"
+                android:gravity="center"
+                android:width="0dp"
+                android:layout_weight="0"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttons_Child4Row_text"
+                android:gravity="center"
+                android:width="0dp"
+                android:layout_weight="0"/>
+    </TableRow>
+</TableLayout>
+</RelativeLayout>

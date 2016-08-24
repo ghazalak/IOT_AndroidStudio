@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="55dip"
+                android:orientation="vertical"
+                android:background="#d1313131">
+    <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/typeImage"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="6dp"/>
+    <TextView
+            android:id="@+id/setting_keyname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/typeImage"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/DevicePorts"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/setting_keyname"
+            android:layout_marginRight="5dp"
+            android:textSize="13dip"/>
+    <Button android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:drawable/ic_menu_delete"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:id="@+id/setting_removeBttton"
+            />
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!--<TextView android:layout_width="wrap_content"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--android:textSize="20dip"-->
+              <!--android:text="نام دستگاه:"-->
+              <!--android:layout_gravity="right"-->
+            <!--/>-->
+    <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/deviceName"
+              android:hint="نام دستگاه"
+            />
+    <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    <Spinner android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/deviceType"
+
+            />
+    <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    <Spinner android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/deviceCount"
+
+            />
+    <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/deviceAddress"
+              android:hint="آدرس دستگاه"
+              android:numeric="signed"
+            />
+</LinearLayout>

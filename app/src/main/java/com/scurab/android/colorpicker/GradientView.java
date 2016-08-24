@@ -19,6 +19,8 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
+import rest.R;
+
 /**
  * Created by jbruchanov on 27/03/2015.
  */
@@ -75,7 +77,7 @@ public class GradientView extends View {
 
     @SuppressLint("NewApi")
     public GradientView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
         init(attrs);
     }
 

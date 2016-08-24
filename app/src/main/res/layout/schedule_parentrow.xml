@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="8dp"
+              android:background="#d1181818">
+    <TextView
+            android:id="@+id/schedule_repeatTextview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13dip"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+            android:text="تکرار"
+            android:layout_marginRight="25dp"
+            />
+    <CheckBox android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:focusable="false"
+              android:id="@+id/schedule_checkbox"
+            />
+    <TextView
+            android:id="@+id/schedule_clockText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:textSize="17dp"
+            android:textColor="#ffffffff"
+            android:layout_centerHorizontal="true"
+            android:paddingRight="27dp"
+            />
+    <Button android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:drawable/ic_menu_delete"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:id="@+id/schedule_removeBttton"
+            android:layout_marginLeft="10dp"
+            />
+    <Switch android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/schedule_removeBttton"
+            android:id="@+id/schedule_switch"
+            />
+</RelativeLayout>
