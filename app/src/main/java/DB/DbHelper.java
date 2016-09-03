@@ -32,7 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
         createTable = "CREATE TABLE ports( " +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT NOT NULL," +
-                "status INTEGER NOT NULL," +
+//                "status INTEGER NOT NULL," +
                 "idx INTEGER NOT NULL," +
                 "device_id INTEGER NOT NULL);";
 
@@ -73,7 +73,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "پریز کنار میز");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             long port_id = db.insertOrThrow("ports", null, values);
 
@@ -89,21 +89,21 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "چراغ وسط");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "چراغ حمام");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
 
             values = new ContentValues();
             values.put("name", "پریز کنار کمد");
-            values.put("type", 2);
+            values.put("type", 4);
             values.put("address", "192.168.1.1");
             values.put("portCount", 1);
             values.put("group_id", group_id);
@@ -112,7 +112,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "پریز کنار کمد");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -128,21 +128,21 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "چراغ خواب");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
              port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "موبایل");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "پنکه");
             values.put("idx", 3);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -157,28 +157,28 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "لپ تاپ");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
              port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "چراغ بالای میز");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "مودم");
             values.put("idx", 3);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "تلفن");
             values.put("idx", 4);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -198,28 +198,28 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "موبایل");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "تلویزیون");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "VCD");
             values.put("idx", 3);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "کلید4");
             values.put("idx", 4);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -234,21 +234,21 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "آب");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "پمپ");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "سرعت");
             values.put("idx", 3);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -263,14 +263,14 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "دور لوستر");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "وسط لوستر");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
@@ -285,14 +285,14 @@ public class DbHelper extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put("name", "سقف");
             values.put("idx", 1);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 
             values = new ContentValues();
             values.put("name", "هالوژن");
             values.put("idx", 2);
-            values.put("status", 0);
+//            values.put("status", 0);
             values.put("device_id", device_id);
             port_id = db.insertOrThrow("ports", null, values);
 

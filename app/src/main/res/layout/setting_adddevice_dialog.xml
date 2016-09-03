@@ -40,6 +40,6 @@
               android:layout_height="wrap_content"
               android:id="@+id/deviceAddress"
               android:hint="آدرس دستگاه"
-              android:numeric="signed"
+
             />
 </LinearLayout>

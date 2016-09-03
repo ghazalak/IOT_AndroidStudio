@@ -1,6 +1,7 @@
 package Connection;
 
-import rest.IDeviceConnectionListener;
+import Model.ObjectColor;
+import main.IDeviceConnectionListener;
 import Model.ObjectDevice;
 import Model.ObjectPort;
 
@@ -12,13 +13,14 @@ public class MqttDeviceConnection implements IDeviceConnection {
     }
 
     @Override
-    public void GetStatus(long DeviceId, int count) {
+    public void GetValue(ObjectDevice device, ObjectPort key) {
     }
 
     @Override
-    public void SetStatus(ObjectDevice device, ObjectPort key, boolean status) {
+    public void SetValue(ObjectDevice device, ObjectPort key, String status) {
 
     }
+
 
 
 }

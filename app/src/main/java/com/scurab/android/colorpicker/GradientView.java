@@ -19,7 +19,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import rest.R;
+import main.R;
 
 /**
  * Created by jbruchanov on 27/03/2015.

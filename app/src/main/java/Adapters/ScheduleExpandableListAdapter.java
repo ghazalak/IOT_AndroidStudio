@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import rest.R;
+import main.R;
 
 public class ScheduleExpandableListAdapter extends BaseExpandableListAdapter {
 

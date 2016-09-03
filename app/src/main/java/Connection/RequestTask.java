@@ -1,8 +1,6 @@
 package Connection;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.widget.Toast;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -13,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-class RequestTask extends AsyncTask<String, String, String> {
+public class RequestTask extends AsyncTask<String, String, String> {
     Exception error;
     HttpDeviceConnection con;
     long DeviceId;
@@ -23,8 +21,10 @@ class RequestTask extends AsyncTask<String, String, String> {
         this.DeviceId = DeviceId;
         this.KeyIdx = KeyIdx;
     }
+
     @Override
     protected String doInBackground(String[] uri) {
+
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response;
         String responseString = null;
@@ -52,7 +52,7 @@ class RequestTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        con.StatusChangedCallback(DeviceId, KeyIdx, Integer.valueOf(result) == 1);
+        con.StatusChangedCallback(DeviceId, KeyIdx, result);
     }
     @Override
     protected void onCancelled(){

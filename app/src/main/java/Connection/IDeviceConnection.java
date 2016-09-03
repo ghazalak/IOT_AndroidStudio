@@ -1,11 +1,14 @@
 package Connection;
 
-import rest.IDeviceConnectionListener;
+import Model.ObjectColor;
+import main.IDeviceConnectionListener;
 import Model.ObjectDevice;
 import Model.ObjectPort;
 
 public interface IDeviceConnection {
     void SetListener(IDeviceConnectionListener listener);
-    void GetStatus(long DeviceId, int count);
-    void SetStatus(ObjectDevice device, ObjectPort key, boolean status);
+
+    void GetValue(ObjectDevice device, ObjectPort port);
+
+    void SetValue(ObjectDevice device, ObjectPort port, String value);
 }

@@ -2,12 +2,11 @@ package com.scurab.android.colorpicker;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import rest.R;
+import main.R;
 
 
 public class MainActivity extends Activity {

@@ -1,4 +1,4 @@
-package rest;
+package main;
 
 import java.util.*;
 import android.app.*;
@@ -14,7 +14,6 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import Adapters.ScheduleExpandableListAdapter;
-import rest.R;
 
 public class ScheduleActivity extends Activity {
     final Context context = this;

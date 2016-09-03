@@ -1,9 +1,7 @@
-package rest;
+package main;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import rest.R;
 
 public class AddKeyActivity extends Activity {
     @Override

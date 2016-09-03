@@ -1,14 +1,18 @@
-package rest;
+package main;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
 import DB.DbHelper;
 import Model.*;
+import Model.ObjectPorts.ObjectPortDimmer;
+import Model.ObjectPorts.ObjectPortKey;
+import Model.ObjectPorts.ObjectPortLedRgb;
+import Model.ObjectPorts.ObjectPortSocket;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 public class Models {
@@ -24,9 +28,6 @@ public class Models {
         }
         return null;
     }
-
-
-
 
     public static void Load(Context context) {
         dbHelper = new DbHelper(context);
@@ -58,31 +59,6 @@ public class Models {
         cursor.close();
 
 
-        ArrayList<ObjectPort> ports = new ArrayList<ObjectPort>();
-        cursor = db.query("ports",
-                new String[]{"*"},
-                null, null, null, null, null);
-        while(cursor.moveToNext()) {
-            long id = cursor.getInt(cursor.getColumnIndex("_id"));
-            int index = cursor.getInt(cursor.getColumnIndex("idx"));
-            String name = cursor.getString(cursor.getColumnIndex("name"));
-            long device_id = cursor.getInt(cursor.getColumnIndex("device_id"));
-            boolean status = cursor.getInt(cursor.getColumnIndex("status"))==1;
-
-            ObjectPort port = new ObjectPort(id, name, status, index, device_id);
-
-            for(int i=0; i<schedules.size();i++){
-                ObjectSchedule schedule = schedules.get(i);
-                if(schedule.getPortId()==id){
-                    port.AddSchedule(schedule);
-                }
-            }
-            ports.add(port);
-            Log.d("Models", "Task: " + name);
-        }
-        cursor.close();
-
-
         ArrayList<ObjectDevice> devices = new ArrayList<ObjectDevice>();
         cursor = db.query("devices",
                 new String[]{"*"},
@@ -93,16 +69,46 @@ public class Models {
             String name = cursor.getString(cursor.getColumnIndex("name"));
             long group_id = cursor.getInt(cursor.getColumnIndex("group_id"));
             String address = cursor.getString(cursor.getColumnIndex("address"));
-            int portCount = cursor.getInt(cursor.getColumnIndex("portCount"));
+            ObjectDevice device = new ObjectDevice(id, name, type, address,group_id);
 
-            ObjectDevice device = new ObjectDevice(id, name, type, address,portCount, group_id);
-            for(int i=0;i<ports.size();i++){
-                ObjectPort port = ports.get(i);
-                if(port.getDeviceId()==id){
-                    port.setDevice(device);
-                    device.addPort(port);
+            Cursor cursor2 = db.query("ports",
+                    new String[]{"*"},
+                    "device_id = " + id, null, null, null, null);
+            while(cursor2.moveToNext()) {
+                long portid = cursor2.getInt(cursor2.getColumnIndex("_id"));
+                int portindex = cursor2.getInt(cursor2.getColumnIndex("idx"));
+                String portname = cursor2.getString(cursor2.getColumnIndex("name"));
+                long device_id = cursor2.getInt(cursor2.getColumnIndex("device_id"));
+                ObjectPort port;
+                switch(type)
+                {
+                    case ObjectDevice.DEVICE_TYPE_DIMMER:
+                        port = new ObjectPortDimmer(portid, portname, portindex, device_id);
+                        break;
+                    case ObjectDevice.DEVICE_TYPE_KEY:
+                        port = new ObjectPortKey(portid, portname, portindex, device_id);
+                        break;
+                    case ObjectDevice.DEVICE_TYPE_LED_RGB:
+                        port = new ObjectPortLedRgb(portid, portname, portindex, device_id);
+                        break;
+                    case ObjectDevice.DEVICE_TYPE_SOCKET:
+                        port = new ObjectPortSocket(portid, portname, portindex, device_id);
+                        break;
+                    default:
+                        port = new ObjectPortKey(portid, portname, portindex, device_id);
+                        break;
                 }
+
+                for(int i=0; i<schedules.size();i++){
+                    ObjectSchedule schedule = schedules.get(i);
+                    if(schedule.getPortId()==portid){
+                        port.AddSchedule(schedule);
+                    }
+                }
+                device.AddPort(port);
             }
+            cursor2.close();
+
             devices.add(device);
             Log.d("Models", "Task: " + name);
         }
@@ -158,9 +164,6 @@ public class Models {
         dbHelper.getReadableDatabase().delete("ports", "device_id in (select _id from devices where group_id = ?)", new String[]{Long.toString(groupId)});
         dbHelper.getReadableDatabase().delete("devices", "group_id=?", new String[]{Long.toString(groupId)});
         dbHelper.getReadableDatabase().delete("groups", "_id=?", new String[]{Long.toString(groupId)});
-
-
-
     }
     public static void RemoveDevice(long deviceId){
         dbHelper.getReadableDatabase().delete("ports", "device_id=?", new String[]{Long.toString(deviceId)});

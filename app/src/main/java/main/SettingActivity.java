@@ -1,4 +1,4 @@
-package rest;
+package main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +12,6 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import Adapters.SettingExpandableListAdapter;
-import rest.R;
 
 public class SettingActivity extends Activity {
     SettingExpandableListAdapter listAdapter;

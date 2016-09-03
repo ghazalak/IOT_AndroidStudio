@@ -2,14 +2,13 @@ package Model;
 
 import java.util.ArrayList;
 
-public class ObjectPort {
-    long device_id;
-    String name;
-    boolean status;
-    ObjectDevice device;
-    int index;
-    long id;
-    ArrayList<ObjectSchedule> schedules = new ArrayList<ObjectSchedule>();
+public abstract class ObjectPort {
+    protected long device_id;
+    protected String name;
+    protected ObjectDevice device;
+    protected int index;
+    protected long id;
+    protected ArrayList<ObjectSchedule> schedules = new ArrayList<ObjectSchedule>();
 
     public ObjectDevice getDevice()
     {
@@ -18,23 +17,25 @@ public class ObjectPort {
     public void setDevice(ObjectDevice device) {
         this.device = device;
     }
-    public ObjectPort(long id, String name, boolean status, int index, long device_id) {
-        this.device_id = device_id;
-        this.id = id;
-        this.name = name;
-        this.status= status;
-        this.index=index;
+
+    public ObjectPort(){
+
     }
-    public boolean getStatus()
-    {
-        return status;
-    }
+
+    //virtual method
+    public void setValue(String value) { }
+
     public String getName()
     {
         return name;
     }
     public int getIndex() {return index;}
     public long getDeviceId(){return device_id;}
-    public void setStatus(boolean status) { this.status = status; }
+
+    //    public void setValue(Integer percent) { this.per; }
     public void AddSchedule(ObjectSchedule sched) { this.schedules.add(sched); }
+
+    public abstract String getSetUrl(ObjectDevice device, String status) ;
+
+    public abstract String getGetUrl(ObjectDevice device) ;
 }

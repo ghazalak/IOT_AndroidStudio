@@ -1,6 +1,6 @@
 package Connection;
 
-import rest.IDeviceConnectionListener;
+import main.IDeviceConnectionListener;
 import Model.ObjectDevice;
 import Model.ObjectPort;
 
@@ -12,18 +12,25 @@ public class HttpDeviceConnection implements IDeviceConnection {
     }
 
     @Override
-    public void GetStatus(long deviceId, int keyIdx) {
-        new RequestTask(this,deviceId, keyIdx).execute("http://"+deviceId+"/get_status"+keyIdx);
+    public void GetValue(ObjectDevice device, ObjectPort port) {
+        try {
+            new RequestTask(this, device.getId(), port.getIndex()).execute(port.getGetUrl(device));
+        }
+        catch(Exception e)
+        {
+//            Toast.makeText()
+        }
     }
 
     @Override
-    public void SetStatus(ObjectDevice device, ObjectPort key, boolean status) {
-        new RequestTask(this, device.getId(), key.getIndex()).execute("http://" + device.getAddress() + "/key" + (key.getIndex()) + (status ? "_on" : "_off"));
+    public void SetValue(ObjectDevice device, ObjectPort port, String value) {
+        new RequestTask(this, device.getId(), port.getIndex()).execute(port.getSetUrl(device, value));
     }
 
-    public void StatusChangedCallback(long DeviceId, int KeyIdx, boolean status) {
+
+    public void StatusChangedCallback(long DeviceId, int portIdx, String value) {
         if (listener != null)
-            listener.StatusChangedCallback(DeviceId, KeyIdx, status);
+            listener.StatusChangedCallback(DeviceId, portIdx, value);
     }
 
 }

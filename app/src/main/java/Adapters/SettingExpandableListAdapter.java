@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import rest.R;
+import main.R;
 
 import Model.ObjectDevice;
 import Model.ObjectGroup;
-import rest.Models;
+import main.Models;
 //import com.example.IOT.Models;
 //import com.example.IOT.R;
 
@@ -44,9 +44,9 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.setting_childrow, null);
         //}
         ImageView image=(ImageView) convertView.findViewById(R.id.typeImage);
-        if(device.getTypeDevice()==1)
+        if(device.getType()==1)
             image.setBackgroundResource(R.drawable.key_off);
-        else if(device.getTypeDevice()==2)
+        else if(device.getType()==2)
             image.setBackgroundResource(R.drawable.socket_off);
         else
             image.setBackgroundResource(R.drawable.colorweel);
@@ -196,7 +196,6 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                 View promptsView = li.inflate(R.layout.setting_adddevice_dialog, null);
                 final Spinner spinnerType = (Spinner) promptsView.findViewById(R.id.deviceType);
                 final Spinner spinnerCount = (Spinner) promptsView.findViewById(R.id.deviceCount);
-
                 ArrayAdapter<String> adapter;
                 List<String> list;
 
@@ -216,7 +215,6 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                 adapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCount.setAdapter(adapter);
-
                 final EditText deviceName = (EditText) promptsView.findViewById(R.id.deviceName);
                 final EditText deviceAddress = (EditText) promptsView.findViewById(R.id.deviceAddress);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(_context);

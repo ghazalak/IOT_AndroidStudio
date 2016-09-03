@@ -18,4 +18,8 @@ public class ObjectGroup {
         return this.devices.get(id);
     }
     public long getId(){return this.id;}
+
+    public ArrayList<ObjectDevice> getDevices() {
+        return devices;
+    }
 }

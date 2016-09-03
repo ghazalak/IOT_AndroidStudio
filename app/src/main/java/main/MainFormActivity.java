@@ -1,12 +1,10 @@
-package rest;
+package main;
 
 import android.app.ActionBar;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
-
-import rest.R;
 
 public class MainFormActivity extends TabActivity {
     @Override

@@ -1,7 +1,6 @@
-package rest;
+package main;
 
 import Adapters.ButtonsExpandableListAdapter;
-import rest.R;
 
 import android.app.Activity;
 import android.content.Intent;

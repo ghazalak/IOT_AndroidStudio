@@ -1,6 +1,6 @@
 package Connection;
 
-import rest.IDeviceConnectionListener;
+import main.IDeviceConnectionListener;
 
 public class DeviceConnectionFactory {
     static boolean Http = true;
