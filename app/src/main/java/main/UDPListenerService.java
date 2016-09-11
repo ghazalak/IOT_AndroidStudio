@@ -4,9 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 import org.apache.http.util.ExceptionUtils;
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
