@@ -10,16 +10,12 @@ public class ObjectPortDimmer extends ObjectPort {
         this.name = name;
         this.index=index;
     }
-    int percent = 0;
+    int percent;
     @Override
     public void setValue(String value) {
         try {
             this.percent = Integer.valueOf(value);
-        }
-        catch (Exception e)
-        {
-
-        }
+        }catch (Exception e) {}
     }
     public int getValue()
     {

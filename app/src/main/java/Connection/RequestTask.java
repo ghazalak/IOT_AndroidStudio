@@ -22,6 +22,10 @@ public class RequestTask extends AsyncTask<String, String, String> {
         this.KeyIdx = KeyIdx;
     }
 
+    public RequestTask() {
+
+    }
+
     @Override
     protected String doInBackground(String[] uri) {
 
@@ -52,6 +56,7 @@ public class RequestTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+        if(con!=null)
         con.StatusChangedCallback(DeviceId, KeyIdx, result);
     }
     @Override

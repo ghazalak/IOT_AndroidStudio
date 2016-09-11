@@ -13,6 +13,16 @@
             android:onClick="btnAddGroupHandler"
             android:layout_marginTop="50dp"
             />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configure"
+        android:textSize="20dip"
+        android:layout_alignParentRight="true"
+        android:id="@+id/Configure"
+        android:onClick="Configure"
+        android:layout_marginTop="50dp"
+        />
     <Space
             android:layout_width="wrap_content"
             android:layout_height="30dp"/>

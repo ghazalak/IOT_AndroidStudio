@@ -3,6 +3,7 @@ package main;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,5 +70,9 @@ public class SettingActivity extends Activity {
                     });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+    public void Configure(View view){
+        Intent intent = new Intent(this,Connect.class);
+        startActivity(intent);
     }
 }

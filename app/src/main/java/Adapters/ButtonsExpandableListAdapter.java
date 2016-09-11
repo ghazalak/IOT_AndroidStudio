@@ -121,8 +121,8 @@ public class ButtonsExpandableListAdapter extends BaseExpandableListAdapter impl
 
                             final CircularSeekBar circularSeekbar;
                             circularSeekbar = (main.CircularSeekBar) promptsViewDimmer.findViewById(R.id.seekbar);
-                            circularSeekbar.setProgress(dimmer.getValue());
                             circularSeekbar.invalidate();
+                            circularSeekbar.setProgress(dimmer.getValue());
                             circularSeekbar.setMax(100);
                             circularSeekbar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
                                 @Override
@@ -137,6 +137,7 @@ public class ButtonsExpandableListAdapter extends BaseExpandableListAdapter impl
 
                                 @Override
                                 public void onStartTrackingTouch(CircularSeekBar seekBar) {
+//                                    seekBar.setProgress(dimmer.getValue());
                                 }
                             });
                             AlertDialog.Builder dlgAlertDimmer = new AlertDialog.Builder(_context);

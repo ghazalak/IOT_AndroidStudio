@@ -17,7 +17,7 @@ public class ObjectPortLedRgb extends ObjectPort {
 
     public void setValue(String value) {
         try {
-            ArrayList<Integer> result = convertString(value);
+            ArrayList<Integer> result = convertString2(value);
             this.Red = result.get(0);
             this.Green = result.get(1);
             this.Blue = result.get(2);
@@ -35,7 +35,14 @@ public class ObjectPortLedRgb extends ObjectPort {
         result.add(Integer.valueOf(value.substring(7, 9), 16));
         return result;
     }
+    private ArrayList<Integer> convertString2(String value) {
 
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        result.add(Integer.valueOf(value.substring(0, 3)));
+        result.add(Integer.valueOf(value.substring(3, 6)));
+        result.add(Integer.valueOf(value.substring(6, 9)));
+        return result;
+    }
     public int getRed() {
         return this.Red;
     }
