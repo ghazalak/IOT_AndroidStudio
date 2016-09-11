@@ -68,48 +68,50 @@ public class Connect extends Activity {
         setContentView(R.layout.connect);
 //        String networkSSID = "Beh-Mobin";
 //        String networkPass = "\"55243098\"";
-//        String networkSSID = "Beh-Key";
-//        String networkPass = "\"123456789\"";
-//        try {
-//            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo mWifi;
-//            List<ScanResult> results = wifiManager.getScanResults();
-//            int foundedDevices = 0;
-//            for (ScanResult scanResult : results) {
-//                if (scanResult.SSID != null && scanResult.SSID.toLowerCase().contains(networkSSID.toLowerCase())) {
-//
-//                    WifiConfiguration conf = new WifiConfiguration();
-//                    conf.SSID = "\"" + scanResult.SSID + "\"";   // Please note the quotes. String should contain SSID in quotes
-//                    conf.preSharedKey = networkPass;
-//                    conf.status = WifiConfiguration.Status.ENABLED;
-//                    conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-//                    conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-//                    conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-//                    conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-//                    conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-//                    int netId = wifiManager.addNetwork(conf);
-//                    wifiManager.enableNetwork(netId, true);
-//                    wifiManager.setWifiEnabled(true);
-//
-//                    mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//                    int tryCount = 0;
-//                    while (!mWifi.isConnected() && tryCount < 10) {
-//                        Thread.sleep(100);
-//                        tryCount++;
-//                    }
-//                    Thread.sleep(3000);
-//                    new RequestTask().execute("http://192.168.1.1/setWiFi?modem_ssid=Beh-Mobin&modem_password=55243098&behpooyesh_password=12345");
-//                    foundedDevices++;
-//                    Log.d("re connecting", scanResult.SSID + " " + conf.preSharedKey);
-//                }
-//            }
-//            Toast.makeText(this, String.valueOf(foundedDevices) + " دستگاه اضافه شد", Toast.LENGTH_LONG).show();
-//            finish();
-//        } catch (Exception ex) {
-//            System.out.println(Arrays.toString(ex.getStackTrace()));
-//            Toast.makeText(this, "ERROR...", Toast.LENGTH_LONG).show();
-//            finish();
-//        }
+        String networkSSID = "Beh-Key";
+        String networkPass = "\"123456789\"";
+        try {
+            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mWifi;
+            List<ScanResult> results = wifiManager.getScanResults();
+            int foundedDevices = 0;
+            for (ScanResult scanResult : results) {
+                if (scanResult.SSID != null && scanResult.SSID.toLowerCase().contains(networkSSID.toLowerCase())) {
+
+                    WifiConfiguration conf = new WifiConfiguration();
+                    conf.SSID = "\"" + scanResult.SSID + "\"";   // Please note the quotes. String should contain SSID in quotes
+                    conf.preSharedKey = networkPass;
+                    conf.status = WifiConfiguration.Status.ENABLED;
+                    conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+                    conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                    conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                    conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                    conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                    int netId = wifiManager.addNetwork(conf);
+                    wifiManager.enableNetwork(netId, true);
+                    wifiManager.setWifiEnabled(true);
+
+                    mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    int tryCount = 0;
+                    while (!mWifi.isConnected() && tryCount < 10) {
+                        Thread.sleep(100);
+                        tryCount++;
+                    }
+                    Thread.sleep(3000);
+                    new RequestTask().execute("http://192.168.1.1/setWiFi?modem_ssid=Beh-Mobin&modem_password=55243098&behpooyesh_password=12345");
+                    foundedDevices++;
+                    Log.d("re connecting", scanResult.SSID + " " + conf.preSharedKey);
+                }
+            }
+
+            Toast.makeText(this, String.valueOf(foundedDevices) + " دستگاه اضافه شد", Toast.LENGTH_LONG).show();
+            finish();
+        } catch (Exception ex) {
+            System.out.println(Arrays.toString(ex.getStackTrace()));
+            Toast.makeText(this, "ERROR...", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -117,7 +119,7 @@ public class Connect extends Activity {
             //Open a random port to send the package
             DatagramSocket socket = new DatagramSocket();
             socket.setBroadcast(true);
-            byte[] sendData = "khubi?".getBytes();
+            byte[] sendData = "who are u?".getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName("192.168.0.102"), 8888);
 
             socket.send(sendPacket);
