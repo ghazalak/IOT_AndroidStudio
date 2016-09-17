@@ -28,7 +28,13 @@ public class Models {
         }
         return null;
     }
-
+    public static ObjectGroup getGroupById(long groupId) {
+        for (int i = 0; i < Groups.size(); i++) {
+                if (Groups.get(i).getId() == groupId)
+                    return Groups.get(i);
+        }
+        return null;
+    }
     public static void Load(Context context) {
         dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -154,9 +160,9 @@ public class Models {
         values = new ContentValues();
         values.put("name", portName);
         values.put("idx", idx);
-        values.put("status", 0);
+//        values.put("status", 0);
         values.put("device_id", device_id);
-        dbHelper.getReadableDatabase().insertOrThrow("ports", null, values);
+        dbHelper.getWritableDatabase().insertOrThrow("ports", null, values);
 
 
     }
@@ -167,7 +173,9 @@ public class Models {
     }
     public static void RemoveDevice(long deviceId){
         dbHelper.getReadableDatabase().delete("ports", "device_id=?", new String[]{Long.toString(deviceId)});
-
         dbHelper.getReadableDatabase().delete("devices", "_id=?", new String[]{Long.toString(deviceId)});
+    }
+    public static void EditDevice(){
+
     }
 }

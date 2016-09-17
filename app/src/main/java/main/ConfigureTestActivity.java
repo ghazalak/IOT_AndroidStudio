@@ -12,8 +12,4 @@ public class ConfigureTestActivity extends Activity {
         setContentView(R.layout.configuration_layout);
 
     }
-    public void Configure(View view){
-        Intent intent = new Intent(this,Connect.class);
-        startActivity(intent);
-    }
 }

@@ -37,7 +37,7 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ObjectDevice device = Models.Groups.get(groupPosition).getDevice(childPosition);
         //if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,6 +48,8 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
             image.setBackgroundResource(R.drawable.key_off);
         else if(device.getType()==2)
             image.setBackgroundResource(R.drawable.socket_off);
+        else if(device.getType()==4)
+            image.setBackgroundResource(R.drawable.led_silver_dimmable);
         else
             image.setBackgroundResource(R.drawable.colorweel);
 
@@ -85,7 +87,53 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                 alertDialog.show();
             }
         });
-        return convertView;
+        Button btn = (Button) convertView.findViewById(R.id.setting_editBttton);
+        btn.setTag((ObjectDevice)getChild(groupPosition, childPosition));
+        final View finalConvertView = convertView;
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View arg0) {
+                LayoutInflater li = LayoutInflater.from(_context);
+                final View promptsView = li.inflate(R.layout.setting_editdevice_dialog, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(_context);
+                alertDialogBuilder.setView(promptsView);
+                ObjectDevice keyTag = (ObjectDevice) arg0.getTag();
+                EditText deviceName = (EditText) finalConvertView.findViewById(R.id.deviceName);
+                deviceName.setText(keyTag.getName());
+                EditText devicePlace = (EditText) finalConvertView.findViewById(R.id.devicePlace);
+                devicePlace.setText(Models.getGroupById(keyTag.getGroupId()).getName());
+                for (int j = keyTag.getPortsCount() + 1; j < Models.MAXIMUM_PORT_COUNT; j++) {
+                    promptsView.findViewById(getEditTextById(j)).setVisibility(View.GONE);
+                    promptsView.findViewById(getTextViewById(j)).setVisibility(View.GONE);
+                }
+                alertDialogBuilder.setCancelable(false).setPositiveButton("تایید",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                long deviceId = Models.InsertDevice(deviceName.getText().toString(),
+                                        deviceType,
+                                        spinnerCount.getSelectedItemPosition() + 1,
+                                        deviceAddress.getText().toString(),
+                                        groupTag.getId());
+
+                                for (int j = 0; j < spinnerCount.getSelectedItemPosition() + 1; j++) {
+                                    EditText t = (EditText) promptsView.findViewById(getEditTextById(j));
+                                    Models.InsertPorts(t.getText().toString(), j + 1, deviceId);
+                                }
+                                Models.Load(_context);
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("بازگشت",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+
+        return finalConvertView;
     }
 
     @Override
@@ -203,6 +251,7 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                 list.add("کلید");
                 list.add("پریز");
                 list.add("RGB LED");
+                list.add("Dimmer");
                 adapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerType.setAdapter(adapter);
@@ -228,6 +277,8 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                                     deviceType = 1;
                                 else if(spinnerType.getSelectedItem().toString() == "پریز")
                                     deviceType = 2;
+                                else if(spinnerType.getSelectedItem().toString() == "Dimmer")
+                                    deviceType = 4;
                                 else
                                 deviceType =3;
 
@@ -251,14 +302,19 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
 
                                                 for (int j = 0; j < spinnerCount.getSelectedItemPosition() + 1; j++) {
                                                     EditText t = (EditText) promptsView.findViewById(getEditTextById(j));
-                                                    Models.InsertPorts(t.getText().toString(), j, deviceId);
+                                                    Models.InsertPorts(t.getText().toString(), j+1, deviceId);
                                                 }
                                                 Models.Load(_context);
                                                 notifyDataSetChanged();
 
                                             }
                                         })
-                                        .create().show();
+                                        .setNegativeButton("بازگشت",
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        dialog.cancel();
+                                                    }
+                                                });
                             }
                         })
                         .setNegativeButton("بازگشت",

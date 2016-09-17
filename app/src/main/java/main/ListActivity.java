@@ -20,8 +20,8 @@ public class ListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.buttons_background_layout);
+
         expListView = (ExpandableListView) findViewById(R.id.buttons_explv);
         listAdapter = new ButtonsExpandableListAdapter(this,expListView);
         expListView.setAdapter(listAdapter);

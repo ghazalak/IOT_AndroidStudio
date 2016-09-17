@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"/>
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deviceName"/>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"/>
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/devicePlace"/>
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/L1"
+        android:layout_centerHorizontal="true">
+        <EditText android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/port1Name"
+            android:text="کلید1"
+            android:textSize="20dip"
+            android:layout_alignParentLeft="true"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:text="port1"
+            android:id="@+id/port1"
+            android:layout_toRightOf="@id/port1Name"
+            />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/L2"
+        android:layout_below="@id/L1"
+        android:layout_centerHorizontal="true">
+        <EditText android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/port2Name"
+            android:textSize="20dip"
+            android:text="کلید2"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/port1Name"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:text="port2"
+            android:id="@+id/port2"
+            android:layout_below="@id/port1"
+            android:layout_toRightOf="@id/port2Name"
+            />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/L2"
+        android:id="@+id/L3"
+        android:layout_centerHorizontal="true">
+        <EditText android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:id="@+id/port3Name"
+            android:text="کلید3"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/port2Name"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:text="port3"
+            android:id="@+id/port3"
+            android:layout_below="@id/port2"
+            android:layout_toRightOf="@id/port3Name"
+
+            />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/L4"
+        android:layout_below="@id/L3"
+        android:layout_centerHorizontal="true">
+        <EditText android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:id="@+id/port4Name"
+            android:text="کلید4"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/port3Name"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:text="port4"
+            android:id="@+id/port4"
+            android:layout_below="@id/port3"
+            android:layout_toRightOf="@id/port4Name"
+            />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
