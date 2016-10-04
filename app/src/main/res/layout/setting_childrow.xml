@@ -38,9 +38,9 @@
             />
     <Button android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/edit"
         android:layout_toRightOf="@id/setting_removeBttton"
         android:focusable="false"
         android:id="@+id/setting_editBttton"
+        android:layout_marginLeft="20dp"
         />
 </RelativeLayout>

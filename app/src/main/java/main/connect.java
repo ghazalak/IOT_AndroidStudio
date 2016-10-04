@@ -1,87 +1,80 @@
 package main;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ConfigurationInfo;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.SyncStateContract;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-
-import com.scurab.android.colorpicker.MainActivity;
 
 import Connection.RequestTask;
 
 public class Connect extends Activity {
+    private int MOBILE_WIRELESS_CONNECTION_TIMEOUT = 10000;
+    private int DEVICE_WIRELESS_CONNECTION_TIMEOUT = 3000;
+    private int BROADCAST_SUMMARY_RECEIVE_TIMEOUT = 10000;
+    private int BROADCAST_SINGLE_RECEIVE_TIMEOUT = 1000;
+
+    String BEH_KEY = "beh-key";
+    String BEHKEY_PASS = "123456789";
+    String NETWORK_SSID = "sara";
+    String NETWORK_PASS = "3390377475";
+
+    Context context1;
     WifiReceiver wifiReceiver;
-    public static final String FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION = "main.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION";
+//    public static final String FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION = "main.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION";
 
     private class WifiReceiver extends BroadcastReceiver {
+        boolean done = false;
         @Override
         public void onReceive(Context context, Intent intent) {
-            afterCreate();
-            if (intent.getAction().equals(FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION)) {
-                finish();
+            if (!done)
+            {
+                unregisterReceiver(wifiReceiver);
+                done = true;
+                connectAndConfigureWifi();
+                broadcastMessage();
+                runOnUiThread(finish);
             }
-            // TODO: Finish Me
-            return;
         }
     }
 
-    protected void onPause() {
-        unregisterReceiver(wifiReceiver);
-        super.onPause();
-    }
-
-    protected void onResume() {
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        super.onResume();
-    }
-
     WifiManager wifiManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connect);
-
+        context1 = getApplicationContext();
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiReceiver = new WifiReceiver();
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         wifiManager.startScan();
     }
-
-    private void afterCreate() {
-//        String networkSSID = "Beh-Mobin";
-//        String networkPass = "\"55243098\"";
-        String networkSSID = "Beh-Key";
-        String networkPass = "\"123456789\"";
+    public Runnable finish = new Runnable() {
+        @Override
+        public void run() {
+            finish();
+        }
+    };
+    private void connectAndConfigureWifi() {
         try {
             ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mWifi;
@@ -89,11 +82,11 @@ public class Connect extends Activity {
             int foundedDevices = 0;
             WifiConfiguration conf;
             for (ScanResult scanResult : results) {
-                if (scanResult.SSID != null && scanResult.SSID.toLowerCase().contains(networkSSID.toLowerCase())) {
+                if (scanResult.SSID != null && scanResult.SSID.toLowerCase().contains(BEH_KEY.toLowerCase())) {
 
                     conf = new WifiConfiguration();
                     conf.SSID = "\"" + scanResult.SSID + "\"";   // Please note the quotes. String should contain SSID in quotes
-                    conf.preSharedKey = networkPass;
+                    conf.preSharedKey = "\"" + BEHKEY_PASS + "\"";
                     conf.status = WifiConfiguration.Status.ENABLED;
                     conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
                     conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
@@ -110,17 +103,23 @@ public class Connect extends Activity {
                         Thread.sleep(100);
                         tryCount++;
                     }
-                    Thread.sleep(3000);
-                    new RequestTask().execute("http://192.168.1.1/setWiFi?modem_ssid=Beh-Mobin&modem_password=55243098&behpooyesh_password=12345");
+                    Thread.sleep(DEVICE_WIRELESS_CONNECTION_TIMEOUT);
+                    new RequestTask().execute("http://192.168.1.1/setWiFi?modem_ssid="+ NETWORK_SSID +"&modem_password="+ NETWORK_PASS +"&behpooyesh_password=12345");
                     foundedDevices++;
                     Log.d("re connecting", scanResult.SSID + " " + conf.preSharedKey);
                 }
             }
+            final int finalFoundedDevices = foundedDevices;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Connect.this, String.valueOf(finalFoundedDevices) + " دستگاه اضافه شد", Toast.LENGTH_LONG).show();
+                }
+            });
 
-            Toast.makeText(getBaseContext(), String.valueOf(foundedDevices) + " دستگاه اضافه شد", Toast.LENGTH_LONG).show();
             conf = new WifiConfiguration();
-            conf.SSID = "\"" + "Beh-Mobin" + "\"";   // Please note the quotes. String should contain SSID in quotes
-            conf.preSharedKey = "\"55243098\"";
+            conf.SSID = "\"" + NETWORK_SSID + "\"";//"\"" + "Beh-Mobin" + "\"";   // Please note the quotes. String should contain SSID in quotes
+            conf.preSharedKey = "\"" + NETWORK_PASS + "\"";//"\"55243098\"";
             conf.status = WifiConfiguration.Status.ENABLED;
             conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
             conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
@@ -130,28 +129,29 @@ public class Connect extends Activity {
             int netId = wifiManager.addNetwork(conf);
             wifiManager.enableNetwork(netId, true);
             wifiManager.setWifiEnabled(true);
-            Thread.sleep(10000);
+            Thread.sleep(MOBILE_WIRELESS_CONNECTION_TIMEOUT);
 //            finish();
         } catch (Exception ex) {
             System.out.println(Arrays.toString(ex.getStackTrace()));
-            Toast.makeText(this, "ERROR...", Toast.LENGTH_LONG).show();
-//            finish();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Connect.this, "ERROR...", Toast.LENGTH_LONG).show();
+                }
+            });
         }
+    }
 
+    private void broadcastMessage() {
         DatagramSocket socketReceive = null;
 
-        StrictMode.ThreadPolicy policy = new   StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        try {
-            socketReceive = new DatagramSocket(9999, InetAddress.getByName("0.0.0.0"));
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+
+        DatagramSocket socket = null;
         try {
             //Open a random port to send the package
-            DatagramSocket socket = new DatagramSocket();
+            socket = new DatagramSocket();
             socket.setBroadcast(true);
             byte[] sendData = "who are u?".getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, getBroadcastAddress(), 8888);
@@ -160,39 +160,47 @@ public class Connect extends Activity {
         } catch (IOException e) {
             Log.e("123", "IOException: " + e.getMessage());
         }
-
+        finally
+        {
+            if(socket != null)
+                socket.close();
+        }
 
         try {
+            socketReceive = new DatagramSocket(9999, InetAddress.getByName("0.0.0.0"));
+
             long startTime = System.currentTimeMillis();
-            long totalTime;
+            long totalTime = 0;
             long endTime;
             //Keep a socket open to listen to all the UDP trafic that is destined for this port
-            while (true) {
-                endTime   = System.currentTimeMillis();
+            while ( totalTime < BROADCAST_SUMMARY_RECEIVE_TIMEOUT) {
+                endTime = System.currentTimeMillis();
                 totalTime = endTime - startTime;
-                if(totalTime==10000)finish();
-                Log.i("123","Ready to receive broadcast packets!");
+                Log.i("123", "Ready to receive broadcast packets!");
 
                 //Receive a packet
                 byte[] recvBuf = new byte[15000];
                 DatagramPacket packet = new DatagramPacket(recvBuf, recvBuf.length);
-                socketReceive.receive(packet);
-
-                //Packet received
-                Log.i("123", "Packet received from: " + packet.getAddress().getHostAddress());
-                String data = new String(packet.getData()).trim();
-                Log.i("123", "Packet received; data: " + data);
-                setContentView(R.layout.configuration_rgb);
-                sendBroadcast(new Intent(FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION));
-                // Send the packet data back to the UI thread
-                Intent localIntent = new Intent("main.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION")
-                        // Puts the data into the Intent
-                        .putExtra("data", data);
-                // Broadcasts the Intent to receivers in this app.
-                LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+                socketReceive.setSoTimeout(BROADCAST_SINGLE_RECEIVE_TIMEOUT);
+                try {
+                    socketReceive.receive(packet);
+                    Log.i("123", "Packet received from: " + packet.getAddress().getHostAddress());
+                    String data = new String(packet.getData()).trim();
+                    Log.i("123", "Packet received; data: " + data);
+                }
+                catch (SocketTimeoutException e) {
+                    // timeout exception.
+                    System.out.println("Timeout reached!!! " + e);
+                    //socketReceive.close();
+                }
             }
         } catch (IOException ex) {
             Log.i("123", "Oops" + ex.getMessage());
+        }
+        finally
+        {
+            if(socketReceive != null)
+                socketReceive.close();
         }
     }
 
@@ -206,8 +214,5 @@ public class Connect extends Activity {
         for (int k = 0; k < 4; k++)
             quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
         return InetAddress.getByAddress(quads);
-    }
-    public void finish(){
-        super.finish();
     }
 }

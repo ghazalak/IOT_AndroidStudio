@@ -4,6 +4,7 @@ package Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import main.Models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
@@ -39,10 +41,8 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ObjectDevice device = Models.Groups.get(groupPosition).getDevice(childPosition);
-        //if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.setting_childrow, null);
-        //}
         ImageView image=(ImageView) convertView.findViewById(R.id.typeImage);
         if(device.getType()==1)
             image.setBackgroundResource(R.drawable.key_off);
@@ -54,7 +54,7 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
             image.setBackgroundResource(R.drawable.colorweel);
 
         TextView DevicePorts=(TextView)convertView.findViewById(R.id.DevicePorts);
-        DevicePorts.setText("("+device.getPortsCount().toString()+")");
+        DevicePorts.setText("("+String.valueOf(device.getPortsCount())+")");
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.setting_keyname);
         txtListChild.setText(device.getName());
@@ -88,8 +88,9 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
         Button btn = (Button) convertView.findViewById(R.id.setting_editBttton);
+        btn.setBackgroundResource(R.drawable.edit);
+        final int a = groupPosition;
         btn.setTag((ObjectDevice)getChild(groupPosition, childPosition));
-        final View finalConvertView = convertView;
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -98,31 +99,55 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                 final View promptsView = li.inflate(R.layout.setting_editdevice_dialog, null);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(_context);
                 alertDialogBuilder.setView(promptsView);
-                ObjectDevice keyTag = (ObjectDevice) arg0.getTag();
-                EditText deviceName = (EditText) finalConvertView.findViewById(R.id.deviceName);
+                final ObjectDevice keyTag = (ObjectDevice) arg0.getTag();
+                final EditText deviceName = (EditText) promptsView.findViewById(R.id.deviceName);
                 deviceName.setText(keyTag.getName());
-                EditText devicePlace = (EditText) finalConvertView.findViewById(R.id.devicePlace);
-                devicePlace.setText(Models.getGroupById(keyTag.getGroupId()).getName());
-                for (int j = keyTag.getPortsCount() + 1; j < Models.MAXIMUM_PORT_COUNT; j++) {
+
+
+                final Spinner spinnerPlace = (Spinner) promptsView.findViewById(R.id.devicePlace);
+                ArrayAdapter<String> adapter;
+                List<String> list;
+                list = new ArrayList<String>();
+                for(int j = 0; j< Models.Groups.size(); j++){
+                    list.add(Models.Groups.get(j).getName());
+                }
+                adapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerPlace.setAdapter(adapter);
+
+//                final EditText devicePlace = (EditText) promptsView.findViewById(R.id.devicePlace);
+//                devicePlace.setText(Models.getGroupById(keyTag.getGroupId()).getName());
+
+                final ArrayList<String> PortsName = new ArrayList<String>();
+                for (int j = keyTag.getPortsCount(); j < Models.MAXIMUM_PORT_COUNT; j++) {
                     promptsView.findViewById(getEditTextById(j)).setVisibility(View.GONE);
                     promptsView.findViewById(getTextViewById(j)).setVisibility(View.GONE);
+                }
+                final ArrayList<EditText> edit = new ArrayList<EditText>();
+                for (int j = 0; j < keyTag.getPortsCount(); j++) {
+                    edit.add((EditText) promptsView.findViewById(getEditTextById(j)));
+                    edit.get(j).setText(Models.getPortByIdx(keyTag.getId(),groupPosition,j,0));
                 }
                 alertDialogBuilder.setCancelable(false).setPositiveButton("تایید",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                long deviceId = Models.InsertDevice(deviceName.getText().toString(),
-                                        deviceType,
-                                        spinnerCount.getSelectedItemPosition() + 1,
-                                        deviceAddress.getText().toString(),
-                                        groupTag.getId());
 
-                                for (int j = 0; j < spinnerCount.getSelectedItemPosition() + 1; j++) {
-                                    EditText t = (EditText) promptsView.findViewById(getEditTextById(j));
-                                    Models.InsertPorts(t.getText().toString(), j + 1, deviceId);
-                                }
+                                if(!deviceName.getText().toString().equals(keyTag.getName()))
+                                    Models.EditDeviceName(deviceName.getText().toString(), childPosition+1);
                                 Models.Load(_context);
                                 notifyDataSetChanged();
 
+                                if(!spinnerPlace.getSelectedItem().equals(Models.Groups.get((int) keyTag.getGroupId()-1).getName()))
+                                    Models.EditDevicePlace( spinnerPlace.getSelectedItem().hashCode(), keyTag.getName(), groupPosition + 1);
+                                Models.Load(_context);
+                                notifyDataSetChanged();
+
+                                for(int i = 0; i < keyTag.getPortsCount(); i++){
+                                    if(!edit.get(i).getText().toString().equals(keyTag.getPortByIndex(i+1).getName()))
+                                        Models.EditDevicePorts(edit.get(i).getText().toString(), i+1, childPosition + 1, keyTag.getPortByIndex(i+1).getName());
+                                }
+                                Models.Load(_context);
+                                notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("بازگشت",
@@ -131,9 +156,12 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                                         dialog.cancel();
                                     }
                                 });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
 
-
-        return finalConvertView;
+        return convertView;
     }
 
     @Override
@@ -315,6 +343,8 @@ public class SettingExpandableListAdapter extends BaseExpandableListAdapter {
                                                         dialog.cancel();
                                                     }
                                                 });
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
                             }
                         })
                         .setNegativeButton("بازگشت",

@@ -35,6 +35,26 @@ public class Models {
         }
         return null;
     }
+    public static Long getGroupByName(int hashcode) {
+        for (int i = 0; i < Groups.size(); i++) {
+            if (Groups.get(i).getName().hashCode() == hashcode)
+                return Groups.get(i).getId();
+        }
+        return null;
+    }
+    public static String getPortByIdx(long deviceId, int groupId, int idx,int a) {
+        for (int i = 0; i < Groups.size(); i++) {
+            if (Groups.get(i).getId() == groupId+1)
+                for (int j = 0; j < Groups.get(i).getDeviceCount(); j++) {
+                    if (Groups.get(i).getDevice(j).getId() == deviceId)
+                        for(int k=0; k<Groups.get(i).getDevice(j).getPortsCount();k++) {
+                            if(Groups.get(i).getDevice(j).getPortByIndex(k+1).getIndex() == idx+1)
+                                return Groups.get(i).getDevice(j).getPortByIndex(k+1).getName();
+                }
+            }
+        }
+        return null;
+    }
     public static void Load(Context context) {
         dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -163,8 +183,6 @@ public class Models {
 //        values.put("status", 0);
         values.put("device_id", device_id);
         dbHelper.getWritableDatabase().insertOrThrow("ports", null, values);
-
-
     }
     public static void RemoveGroup(long groupId){
         dbHelper.getReadableDatabase().delete("ports", "device_id in (select _id from devices where group_id = ?)", new String[]{Long.toString(groupId)});
@@ -175,7 +193,22 @@ public class Models {
         dbHelper.getReadableDatabase().delete("ports", "device_id=?", new String[]{Long.toString(deviceId)});
         dbHelper.getReadableDatabase().delete("devices", "_id=?", new String[]{Long.toString(deviceId)});
     }
-    public static void EditDevice(){
-
+    public static void EditDeviceName(String DeviceName, int device_id) {
+        ContentValues values;
+        values = new ContentValues();
+        values.put("name", DeviceName);
+        dbHelper.getWritableDatabase().update("devices", values, "_id=?", new String[]{Long.toString(device_id)});
+    }
+    public static void EditDevicePlace(int hashcode, String device_name, int group_id){
+        ContentValues values;
+        values = new ContentValues();
+        values.put("group_id", (getGroupByName(hashcode)));
+        dbHelper.getWritableDatabase().update("devices", values, "group_id=? and name=?",new String[]{Long.toString(group_id), device_name});
+    }
+    public static void EditDevicePorts(String portName, int idx, int deviceId, String portPreviousName){
+        ContentValues values;
+        values = new ContentValues();
+        values.put("name", portName);
+        dbHelper.getWritableDatabase().update("ports", values, "idx=? and device_id=? and name=?",new String[]{Integer.valueOf(idx).toString(), Integer.valueOf(deviceId).toString(), portPreviousName});
     }
 }
